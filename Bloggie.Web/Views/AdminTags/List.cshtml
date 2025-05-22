@@ -1,0 +1,51 @@
+﻿@*
+    Below is for Model Binding a property in to a view which is a List of Tag DOmain Model and converting in to a list<>
+    Here small model is a keyword and Caps Model is of rchecking Models of DB
+*@
+@model List<Bloggie.Web.Models.Domain.Tag > 
+@{
+}
+<div class="bg-secondary bg-opacity-10 py-2">
+    <div class="container">
+        <h1>Show All Tag - Admin Functionality</h1>
+    </div>
+</div>
+
+
+
+<div class="container py-5">
+<!--Checking condition like if Model is not null and -->
+    @if (Model != null && Model.Any())
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <!--These are the 4 Headings for displaying details last one blank for edit option-->
+                    <th>Id</th>
+                    <th>Name</th>
+                    <th>Display Name</th>
+                    <th> </th>
+                  </tr>
+            </thead>
+            <tbody>
+                @foreach (var tag in Model)
+                {
+                    <tr>
+                        <!--Below are the Data showing from DB Tag models comming from tag list of controller-->
+                        <td>@tag.Id</td>
+                        <td>@tag.Name</td>
+                        <td>@tag.DisplayName</td>
+
+                        <td>
+                            <a asp-area="" asp-controller="AdminTags" asp-action="Edit" asp-route-id="@tag.Id">Edit</a>
+                        </td>
+                       </tr>
+                }
+                </tbody>
+                </table>
+    }
+    else
+    {
+        <p>No tags found!</p>
+    }
+</div>
