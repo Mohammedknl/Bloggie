@@ -17,7 +17,7 @@ namespace Bloggie.Web.Models.ViewModels
 
         //Adding 2 properties for displaying tags and other for capture the tags 
 
-        // For Displaying tags inside a dropdown list on Add page
+        // For Displaying tags inside a Multiple dropdown list on Add BlogPost page
         public IEnumerable<SelectListItem>Tags { get; set; }
         //prop for Collecting Multiple Tags for each Blog
         //changing a dropdown selector fro collecting one tag in to multiple tags select dropdown user can collect multiple tags for a single Blog

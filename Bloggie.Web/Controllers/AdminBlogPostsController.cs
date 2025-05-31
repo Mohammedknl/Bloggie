@@ -23,16 +23,17 @@ namespace Bloggie.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Add()
         {
-            // get tags from repository
+            // Talking to Repository to get tags from repository for displaying on multiple dropdown box inside add view
             var tags = await tagRepository.GetAllAsync();
 
             //after gettings tags from repository we can assign tags to View Model AddBlogPostrequest
+            //To fill Tags properties with Text as Name and value as Guid converted to string
 
             var model = new AddBlogPostRequest
             {
                 Tags = tags.Select(x => new SelectListItem { Text = x.Name, Value = x.Id.ToString() })
             };
-
+            //providing this model to View for Model Binding
             return View(model);
         }
         [HttpPost]
