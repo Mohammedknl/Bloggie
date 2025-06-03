@@ -20,13 +20,14 @@ namespace Bloggie.Web.Controllers
             this.blogPostRepository = blogPostRepository;
         }
         //S1.Creating Asynchronous Add method to add new Blogs it is also a Index or home page for Add New BlogPost page
+        //In this Add functionality we are fetching only Tags to display on Multiple dropdown selection to display on Add views page
         [HttpGet]
         public async Task<IActionResult> Add()
         {
             // Talking to Repository to get tags from repository for displaying on multiple dropdown box inside add view
             var tags = await tagRepository.GetAllAsync();
 
-            //after gettings tags from repository we can assign tags to View Model AddBlogPostrequest
+            //after gettings tags from tagRepository we can assign tags to View Model AddBlogPostrequest
             //To fill Tags properties with Text as Name and value as Guid converted to string
 
             var model = new AddBlogPostRequest
@@ -40,7 +41,9 @@ namespace Bloggie.Web.Controllers
         public async Task<IActionResult> Add(AddBlogPostRequest addBlogPostRequest)
         {
             //Based on the Id's comming from AddBlogpostRequest we can assign the Tags to Blogpost as below
-            //Mapping View Model to Domain Model
+            
+            //Mapping properties of View Model to Domain Model before we post the values
+            //Blogpost is the Domain Model and addBlogPostRequest is the View Model
 
             var blogPost = new BlogPost
             {
@@ -55,7 +58,7 @@ namespace Bloggie.Web.Controllers
                 Visible = addBlogPostRequest.Visible,
             };
 
-            // Maping Tags from selected tags by looping through ID and get the values from DB
+            // Maping Tags property from selected tags by looping through ID and get the values from DB
             var selectedTags = new List<Tag>();
             foreach (var selectedTagId in addBlogPostRequest.SelectedTags)
             {
@@ -76,7 +79,7 @@ namespace Bloggie.Web.Controllers
 
 
 
-            return RedirectToAction("Add");
+            return RedirectToAction("Add"); //Here we can also redirect to List method to display list of all Blogpost
         }
         //S2.Working on List Action Method to Display all Blogs by fetching from DB models
         [HttpGet]
@@ -101,7 +104,7 @@ namespace Bloggie.Web.Controllers
 
             if (blogPost != null)
             {
-                // mapping the domain model into the view model to show all fileds from DB model on web page for editing
+                //mapping the domain model into the view model to show all fileds from DB model on web page for editing
                 var model = new EditBlogPostRequest
                 {
                     Id = blogPost.Id,

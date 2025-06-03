@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Bloggie.Web.Repositories
 {
+    //Here we write the implementation of Repository Interface inside this Repository class
     public class BlogPostRepository : IBlogPostRepository
     {
         private readonly BloggieDbContext bloggieDbContext;
@@ -16,7 +17,7 @@ namespace Bloggie.Web.Repositories
         }
         public async Task<BlogPost> AddAsync(BlogPost blogPost)
         {
-            await bloggieDbContext.AddAsync(blogPost);
+            await bloggieDbContext.AddAsync(blogPost); // same inside controller await blogPostRepository.AddAsync(blogPost);
             await bloggieDbContext.SaveChangesAsync();
             return blogPost;
 

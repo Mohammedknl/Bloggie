@@ -76,9 +76,6 @@ This is the Add View/Index page for AdminBlogPost Controller Add Action method t
             </label>
         </div>
 
-        <!--Here we want Blogs to assign Tags ie it gives inoformation about what tag the blog belongs to
-            It will get the tags from DB to link blogs with Tags ie A single Blog can have multiple Tags
-        -->
         <div class="mb-3">
             <label class="form-label">Tags</label>
             <select class="form-select"
@@ -97,3 +94,42 @@ This is the Add View/Index page for AdminBlogPost Controller Add Action method t
 
     </form>
 </div>
+
+
+@section Scripts {
+    <script>
+        var editor = new FroalaEditor('#content', {
+            imageUploadURL: '/api/images'
+        });
+
+
+        const featuredUploadElement = document.getElementById('featuredImageUpload');
+        const featuredImageUrlElement = document.getElementById('featuredImageUrl');
+        const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+
+        async function uploadFeaturedImage(e) {
+            console.log(e.target.files[0]);
+
+            let data = new FormData();
+            data.append('file', e.target.files[0]);
+
+            await fetch('/api/images', {
+                method: 'POST',
+                headers: {
+                    'Aceept': '*/*',
+                },
+                body: data
+            }).then(response => response.json())
+                .then(result => {
+                    featuredImageUrlElement.value = result.link;
+                    featuredImageDisplayElement.src = result.link;
+                    featuredImageDisplayElement.style.display = 'block';
+                });
+        }
+
+
+        featuredUploadElement.addEventListener('change', uploadFeaturedImage);
+
+    </script>
+}

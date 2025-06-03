@@ -24,6 +24,9 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 builder.Services.AddScoped<ITagRepository,TagRepository>();
 //Adding new service or injecting IBlogRepository for using
 builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
+//Injecting ImageRepository for uploading images using cloudinaryImageRepository Implementation
+builder.Services.AddScoped<IImageRespository, CloudinaryImageRepository>();
+
 
 var app = builder.Build();
 
