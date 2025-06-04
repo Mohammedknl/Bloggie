@@ -9,7 +9,7 @@ namespace Bloggie.Web.Repositories
 
         Task<BlogPost?> GetAsync(Guid id);
 
-        //Task<BlogPost?> GetByUrlHandleAsync(string urlHandle); not used now
+        Task<BlogPost?> GetByUrlHandleAsync(string urlHandle); //Used for Displaying Blogpost based on url handle search
 
         Task<BlogPost> AddAsync(BlogPost blogPost);
 
