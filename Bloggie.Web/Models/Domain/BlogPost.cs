@@ -30,11 +30,12 @@ namespace Bloggie.Web.Models.Domain
         // Navigation property for Tags from BlogPost using Icollection type and Tag is the Model name and Tags is the Name of the property
        //Here we r saying that a BlogPost can have multiple Tags
         public ICollection<Tag> Tags { get; set; }
-        /*
+        
+        //To get the total no of likes to the BlogPost
         public ICollection<BlogPostLike> Likes { get; set; }
-        public ICollection<BlogPostComment> Comments { get; set; }
+        //public ICollection<BlogPostComment> Comments { get; set; }
 
-        */
+        
 
 
 

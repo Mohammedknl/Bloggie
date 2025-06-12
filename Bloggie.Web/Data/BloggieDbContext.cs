@@ -14,10 +14,10 @@ namespace Bloggie.Web.Data
         public DbSet<BlogPost> BlogPosts { get; set; } //BlogPost is the Entity comes from Domain Models and BlogPosts is the name of the Table inside DB
         public DbSet<Tag> Tags { get; set; } //Here EF core is creating a Tags table with type as DbSet and using Tag Domain Model
        
-        /*
+        //To access the BlogPostLike Table
         public DbSet<BlogPostLike> BlogPostLike { get; set; }
-        public DbSet<BlogPostComment> BlogPostComment { get; set; }
+        //public DbSet<BlogPostComment> BlogPostComment { get; set; }
 
-        */
+       
     }
 }

@@ -18,6 +18,8 @@ namespace Bloggie.Web.Controllers
             //Using this Url Handle we will find the blog based on urlhandle search
            // var liked = false;
             var blogPost = await blogPostRepository.GetByUrlHandleAsync(urlHandle);
+
+            //Below is to check the Total count of Likes for particular Blog
             //var blogDetailsViewModel = new BlogDetailsViewModel();
             /*
             if (blogPost != null)
