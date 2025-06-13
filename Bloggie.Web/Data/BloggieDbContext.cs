@@ -13,10 +13,12 @@ namespace Bloggie.Web.Data
         //Creating properties for creating Tables inside Database using DbSet as type and Models name by typing prop + tab/enter
         public DbSet<BlogPost> BlogPosts { get; set; } //BlogPost is the Entity comes from Domain Models and BlogPosts is the name of the Table inside DB
         public DbSet<Tag> Tags { get; set; } //Here EF core is creating a Tags table with type as DbSet and using Tag Domain Model
-       
-        //To access the BlogPostLike Table
+
+        //DB Set property for BlogPostLike model
         public DbSet<BlogPostLike> BlogPostLike { get; set; }
-        //public DbSet<BlogPostComment> BlogPostComment { get; set; }
+
+        //DB Set property for BlogPostComment model
+        public DbSet<BlogPostComment> BlogPostComment { get; set; }
 
        
     }

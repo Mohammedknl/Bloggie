@@ -48,7 +48,9 @@ builder.Services.AddScoped<IBlogPostRepository, BlogPostRepository>();
 //Injecting ImageRepository for uploading images using cloudinaryImageRepository Implementation
 builder.Services.AddScoped<IImageRespository, CloudinaryImageRepository>();
 //Injecting IBlogPostLikeRepository
-//builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
+builder.Services.AddScoped<IBlogPostLikeRepository, BlogPostLikeRepository>();
+//Injecting IBlogPostCommentRepository
+builder.Services.AddScoped<IBlogPostCommentRepository, BlogPostCommentRepository>();
 
 
 var app = builder.Build();

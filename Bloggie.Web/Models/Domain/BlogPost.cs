@@ -33,7 +33,9 @@ namespace Bloggie.Web.Models.Domain
         
         //To get the total no of likes to the BlogPost
         public ICollection<BlogPostLike> Likes { get; set; }
-        //public ICollection<BlogPostComment> Comments { get; set; }
+
+        //Linking BlogPostComment property ie one blog post can have multiple comments
+        public ICollection<BlogPostComment> Comments { get; set; }
 
         
 
