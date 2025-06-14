@@ -7,7 +7,7 @@ namespace Bloggie.Web.Models.ViewModels
         [Required]
         public string Username { get; set; }
 
-        [Required]
+        [Required]  //Server side validations with custom error message
         [MinLength(6, ErrorMessage = "Password has to be at least 6 characters")]
         public string Password { get; set; }
 

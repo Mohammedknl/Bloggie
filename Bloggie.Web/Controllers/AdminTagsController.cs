@@ -1,4 +1,5 @@
 ﻿using System.Runtime.CompilerServices;
+using Azure.Core;
 using Bloggie.Web.Data;
 using Bloggie.Web.Models.Domain;
 using Bloggie.Web.Models.ViewModels;
@@ -31,7 +32,15 @@ namespace Bloggie.Web.Controllers
         [HttpPost]  
         [ActionName("Add")] 
         public async Task<IActionResult> Add(AddTagRequest addTagRequest)
-        {   
+        {
+            //Below line is for Custom Validation Message
+            ValidateAddTagRequest(addTagRequest);
+
+            if (ModelState.IsValid == false)
+            {
+                return View();
+            }
+            // Mapping AddTagRequest to Tag domain model
             var tag = new Tag
             {
                 Name = addTagRequest.Name,
@@ -42,6 +51,20 @@ namespace Bloggie.Web.Controllers
             
             return RedirectToAction("List");   
         }
+
+        //This below method is responsible for Custom Validation message for the Forms
+        private void ValidateAddTagRequest(AddTagRequest request)
+        {
+            //Here we will add each and every property to add custome validation message
+            if (request.Name is not null && request.DisplayName is not null)
+            {
+                if (request.Name == request.DisplayName)
+                {
+                    ModelState.AddModelError("DisplayName", "Name cannot be the same as DisplayName");
+                }
+            }
+        }
+
         //3.Displaying all Tags in a tabular manner using Bootstrap table on web page to read records from Database models
         //Reading records from DB
         [HttpGet]  

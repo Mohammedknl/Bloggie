@@ -26,7 +26,9 @@ namespace Bloggie.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Register(RegisterViewModel registerViewModel)
         {
-            
+            //Below If condition is to check the Model state for server side validations
+            if (ModelState.IsValid)
+            {
                 //creating object of IdentityUser class as identityUser
                 var identityUser = new IdentityUser
                 {
@@ -47,7 +49,9 @@ namespace Bloggie.Web.Controllers
                         return RedirectToAction("Register");
                     }
                 }
-            
+
+            }
+            //If Model is valid it will register or else it will return View back
 
             // Show error notification
             return View();
@@ -72,12 +76,12 @@ namespace Bloggie.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Login(LoginViewModel loginViewModel)
         {
-            /*
+            
             if (!ModelState.IsValid)
             {
                 return View();
             }
-            */
+            
             var signInResult = await signInManager.PasswordSignInAsync(loginViewModel.Username,
                 loginViewModel.Password, false, false);
 
