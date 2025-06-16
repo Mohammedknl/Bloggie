@@ -87,6 +87,7 @@ namespace Bloggie.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> List()
         {
+            
             // Calling the repository to get back all the Blogs data from DB using blogPostrepository Injected file
             var blogPosts = await blogPostRepository.GetAllAsync();
 

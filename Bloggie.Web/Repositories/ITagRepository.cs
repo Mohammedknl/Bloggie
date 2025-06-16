@@ -11,7 +11,14 @@ namespace Bloggie.Web.Repositories
         //As BloggieDbContext always knows about Domain Models ie Tag Domain model Tag is used to fetch the records/Tags
         //1.Creating Asynchronous method to get all tags back from DB for Asynchronus wrapping return type inside Task<>
         //IEnumerable is same as List of all tags from DB
-        Task<IEnumerable<Tag>> GetAllAsync();
+        // Task<IEnumerable<Tag>> GetAllAsync();
+        //New GetAllAsync method to list all Tags based on search and Pagination
+        Task<IEnumerable<Tag>> GetAllAsync(
+            string? searchQuery = null,
+            string? sortBy = null,
+            string? sortDirection = null,
+            int pageNumber = 1,
+            int pageSize = 100);
 
         //2.Creating Asynchronous method to get single tag back based on parameter Guid from DB for Asynchronus wrapping return type inside Task<>
         Task<Tag?> GetAsync(Guid id);
@@ -26,6 +33,9 @@ namespace Bloggie.Web.Repositories
 
         //1.Creating Asynchronous method to Deletea  tag from DB using Guid as a parameter for Asynchronus wrapping return type inside Task<>
         Task<Tag> DeleteAsync(Guid id);
+
+        //Below method is for pagination  to give the count of elements of table
+        Task<int> CountAsync();
 
 
     }

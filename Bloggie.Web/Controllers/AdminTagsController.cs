@@ -7,6 +7,7 @@ using Bloggie.Web.Repositories;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Bloggie.Web.Controllers
 {
@@ -52,7 +53,7 @@ namespace Bloggie.Web.Controllers
             return RedirectToAction("List");   
         }
 
-        //This below method is responsible for Custom Validation message for the Forms
+        //This below method is responsible for Server side Custom Validation message for the Add tag Form if the Name and Display Name fields are same
         private void ValidateAddTagRequest(AddTagRequest request)
         {
             //Here we will add each and every property to add custome validation message
@@ -66,16 +67,59 @@ namespace Bloggie.Web.Controllers
         }
 
         //3.Displaying all Tags in a tabular manner using Bootstrap table on web page to read records from Database models
-        //Reading records from DB
-        [HttpGet]  
         
-        [ActionName("List")]  
-        public async Task<IActionResult> List()
-        {
-            
-            var tags = await tagRepository.GetAllAsync(); 
+        //Reading records from DB without sorting, filtering and Pagination
+        //[HttpGet]
 
-            return View(tags);  
+        //[ActionName("List")]
+        //public async Task<IActionResult> List()
+        //{
+
+        //    var tags = await tagRepository.GetAllAsync();
+
+        //    return View(tags);
+        //}
+
+        //New code to display List of Tags based on Searching and pagination
+        [HttpGet]
+        [ActionName("List")]
+        public async Task<IActionResult> List(
+            string? searchQuery,
+            string? sortBy,
+            string? sortDirection,
+            int pageSize = 1, //this is for displaying no of elements/Tags result in each page here I changed from 3 to 1
+            int pageNumber = 1)
+        {
+            //To get the count of Tags Tag Repository has
+            //Based on the count on subset of pages we need to return the result
+            var totalRecords = await tagRepository.CountAsync();
+            var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+            //If the page doesn't exit if no tags found on other pages then stick on same last page
+            if (pageNumber > totalPages)
+            {
+                pageNumber--;
+            }
+            //If the page no is less then we can increase the page no to show all tags
+            if (pageNumber < 1)
+            {
+                pageNumber++;
+            }
+
+            //This ViewBag is reposnsible for saving the input text to stay on the text field while searching
+            ViewBag.TotalPages = totalPages;
+
+            //To temporary save the state of searh Query we use ViewBag here and inside cshtml page list
+            ViewBag.SearchQuery = searchQuery;
+            ViewBag.SortBy = sortBy;
+            ViewBag.SortDirection = sortDirection;
+            ViewBag.PageSize = pageSize;
+            ViewBag.PageNumber = pageNumber;
+
+            // use dbContext to read the tags based on searchQuery sorting and pagination
+            var tags = await tagRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
+
+            return View(tags);
         }
 
         //4.Edit or updating and Deleting Records from DB Table
@@ -111,6 +155,7 @@ namespace Bloggie.Web.Controllers
                 DisplayName = editTagRequest.DisplayName
 
             };
+            
 
             var updateTag = await tagRepository.UpdateAsync(tag);
             if (updateTag != null)

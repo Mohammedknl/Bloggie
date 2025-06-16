@@ -47,10 +47,63 @@ namespace Bloggie.Web.Repositories
         }
 
 
-        public async Task<IEnumerable<Tag>> GetAllAsync()
+        //public async Task<IEnumerable<Tag>> GetAllAsync()
+        //{
+        //   return await bloggieDbContext.Tags.ToListAsync();
+        //}
+        //New code foe Implemeting GetAllAsync method to list all Tags based on Search query and pagination
+        public async Task<IEnumerable<Tag>> GetAllAsync(
+            string? searchQuery,
+            string? sortBy,
+            string? sortDirection,
+            int pageNumber = 1,
+            int pageSize = 100)
         {
-           return await bloggieDbContext.Tags.ToListAsync();
+            //Converting DBSet to a Querable for search Query
+            var query = bloggieDbContext.Tags.AsQueryable();
+
+            // Filtering on two diff columns ie on Name column and DisplayName column based on Query searh
+            //If the searcch query is Null or have null values
+            if (string.IsNullOrWhiteSpace(searchQuery) == false)
+            {
+               //Filtering on Name section and DisplayName section or columns using Contains method
+                query = query.Where(x => x.Name.Contains(searchQuery) ||
+                                         x.DisplayName.Contains(searchQuery));
+            }
+
+            // Sorting ascending or Descending order 
+            if (string.IsNullOrWhiteSpace(sortBy) == false)
+            {
+                var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+                if (string.Equals(sortBy, "Name", StringComparison.OrdinalIgnoreCase))
+                {
+                    query = isDesc ? query.OrderByDescending(x => x.Name) : query.OrderBy(x => x.Name);
+                }
+
+                if (string.Equals(sortBy, "DisplayName", StringComparison.OrdinalIgnoreCase))
+                {
+                    query = isDesc ? query.OrderByDescending(x => x.DisplayName) : query.OrderBy(x => x.DisplayName);
+                }
+            }
+
+            // Pagination is like skipping few results and accepting other results
+            // Skip 0 Take 5 -> Page 1 of 5 results
+            // Skip 5 Take next 5 -> Page 2 of 5 results
+            var skipResults = (pageNumber - 1) * pageSize;
+            query = query.Skip(skipResults).Take(pageSize);
+
+            return await query.ToListAsync();
+
+            // return await bloggieDbContext.Tags.ToListAsync(); converting this line in to above 2 lines for filtering 
         }
+        //Below New method is for Counting total no of elements inside Tags table for Pagination functionality
+        public async Task<int> CountAsync()
+        {
+            return await bloggieDbContext.Tags.CountAsync();
+        }
+
+
 
         public Task<Tag?> GetAsync(Guid id)
         {
