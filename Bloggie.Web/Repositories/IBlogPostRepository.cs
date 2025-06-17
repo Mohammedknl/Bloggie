@@ -5,7 +5,7 @@ namespace Bloggie.Web.Repositories
     public interface IBlogPostRepository
     {
         //Here Inside Interface we only Define the methods and implemented inside IBlogPostRepository class
-        Task<IEnumerable<BlogPost>> GetAllAsync();
+        Task<IEnumerable<BlogPost>> GetAllAsync(int pageNumber = 1,int pageSize = 100);
 
         Task<BlogPost?> GetAsync(Guid id);
 
@@ -17,6 +17,9 @@ namespace Bloggie.Web.Repositories
 
         Task<BlogPost?> DeleteAsync(Guid id);
 
-        
+        //Below method is for pagination  to give the count of elements of table
+        Task<int> CountAsync();
+
+
     }
 }

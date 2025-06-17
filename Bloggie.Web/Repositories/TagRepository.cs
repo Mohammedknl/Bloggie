@@ -51,7 +51,7 @@ namespace Bloggie.Web.Repositories
         //{
         //   return await bloggieDbContext.Tags.ToListAsync();
         //}
-        //New code foe Implemeting GetAllAsync method to list all Tags based on Search query and pagination
+        //New code for Implemeting GetAllAsync method to list all Tags based on Search query and pagination
         public async Task<IEnumerable<Tag>> GetAllAsync(
             string? searchQuery,
             string? sortBy,

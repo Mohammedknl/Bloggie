@@ -38,11 +38,37 @@ namespace Bloggie.Web.Repositories
             return null;
         }
         //This is for getting all Blogpost to display on List Page
-        public async Task<IEnumerable<BlogPost>> GetAllAsync()
+        //public async Task<IEnumerable<BlogPost>> GetAllAsync()
+        //{
+        //    //This is to get all the Blogs from DB give back to controller to display on List view using bloggieDbContext
+        //    return await bloggieDbContext.BlogPosts.Include(x => x.Tags).ToListAsync();
+        //}
+        //New code for GetAllAsync method implementation added here with Pagination
+
+        public async Task<IEnumerable<BlogPost>> GetAllAsync(int pageNumber = 1,int pageSize = 100)
         {
-            //This is to get all the Blogs from DB give back to controller to display on List view using bloggieDbContext
-            return await bloggieDbContext.BlogPosts.Include(x => x.Tags).ToListAsync();
+            //Converting DBSet to a Querable for search Query
+            var query = bloggieDbContext.BlogPosts.Include(x => x.Tags).AsQueryable();
+
+            // Pagination is like skipping few results and accepting other results
+            // Skip 0 Take 5 -> Page 1 of 5 results
+            // Skip 5 Take next 5 -> Page 2 of 5 results
+            var skipResults = (pageNumber - 1) * pageSize;
+            query = query.Skip(skipResults).Take(pageSize);
+
+            return await query.ToListAsync();
+
+          // return await bloggieDbContext.Tags.ToListAsync(); converting this line in to above 2 lines for pagination
         }
+        //Below New method is for Counting total no of elements inside Tags table for Pagination functionality
+        public async Task<int> CountAsync()
+        {
+            return await bloggieDbContext.BlogPosts.CountAsync();
+        }
+
+
+        //New code ends here
+
         //This is for getting a single Blog based on ID also by including Tags information used for Edit/Delete Action Methods
         //If found return Blogpost else returns null as we give ? for BlogPost?
         public async Task<BlogPost?> GetAsync(Guid id)

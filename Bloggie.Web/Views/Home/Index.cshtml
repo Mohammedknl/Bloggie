@@ -9,7 +9,7 @@
     <div class="row align-items-center g-5 py-5">
         <div class="col-12 col-lg-6">
             <h1 class="display-5 fw-bold lh-1 mb-3">
-                Bloggie - The Dev Blog
+                Bloggie - Akbar Owaisi All Campus Blogs
             </h1>
             <p class="lead">
                 Bloggie is the home to View blogpost of various Educational Institutes of Janab Akbaruddin Owaisi Chairman Salar-E-Millat Educational Trust.
@@ -17,18 +17,18 @@
         </div>
 
         <div class="col-12 col-lg-6">
-            <img src="https://images.pexels.com/photos/57690/pexels-photo-57690.jpeg?auto=compress&cs=tinysrgb&w=600"
-                 alt="Bloggie - Dev blogs"
+            <img src="~/images/logo.png" alt="Blog Image" alt="Bloggie - Dev blogs"
                  class="d-block mx-lg-auto img-fluid" width="300" />
+            
         </div>
     </div>
 </div>
 
-<!--Displaying all blogs on Home page below Hero section-->
+<!--Displaying all blogs with Tags above on Home page below Hero section-->
 
 <div class="container">
     <div class="row justify-content-center">
-         <div class="col-6 d-flex justify-content-center flex-wrap">
+         <div class="col-6 d-flex">
 
             @if (Model != null && Model.Tags.Any())
             {

@@ -8,6 +8,10 @@ This is the List View page to display all Blogs inside a Bootstrap Table for Adm
 @{
 }
 
+@{
+    int nextPage = Convert.ToInt32(ViewBag.PageNumber) + 1;
+    int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
+}
 
 <div class="bg-secondary bg-opacity-10 py-2">
     <div class="container">
@@ -29,7 +33,13 @@ This is the List View page to display all Blogs inside a Bootstrap Table for Adm
                 <tr>
                     <td>Id</td>
                     <td>Heading</td>
-                    <td>Tags</td>
+
+                    <td>Tags
+
+                        
+
+
+                    </td>
                     <td>Action</td>
                 </tr>
             </thead>
@@ -65,6 +75,50 @@ This is the List View page to display all Blogs inside a Bootstrap Table for Adm
                 }
             </tbody>
         </table>
+
+        <!--Below is for Pagination functionality dividing contents based on pages-->
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-controller="AdminBlogPosts"
+                       asp-action="List"
+                       asp-route-pageNumber="@prevPage"
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
+                        Previous
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link"
+                           asp-controller="AdminBlogPosts"
+                           asp-action="List"
+                           asp-route-pageNumber="@i"
+                           asp-route-pageSize="@ViewBag.PageSize"
+                           asp-route-sortBy="@ViewBag.SortBy"
+                           asp-route-sortDirection="@ViewBag.SortDirection">
+                            @i
+                        </a>
+                    </li>
+                }
+
+
+                <li class="page-item">
+                    <a class="page-link"
+                       asp-controller="AdminBlogPosts"
+                       asp-action="List"
+                       asp-route-pageNumber="@nextPage"
+                       asp-route-pageSize="@ViewBag.PageSize"
+>
+                        Next
+                    </a>
+                </li>
+            </ul>
+        </nav>
 
 
     

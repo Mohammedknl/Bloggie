@@ -84,15 +84,55 @@ namespace Bloggie.Web.Controllers
             return RedirectToAction("Add"); //Here we can also redirect to List method to display list of all Blogpost
         }
         //S2.Working on List Action Method to Display all Blogs by fetching from DB models
-        [HttpGet]
-        public async Task<IActionResult> List()
-        {
-            
-            // Calling the repository to get back all the Blogs data from DB using blogPostrepository Injected file
-            var blogPosts = await blogPostRepository.GetAllAsync();
+        //[HttpGet]
+        //public async Task<IActionResult> List()
+        //{
 
-            return View(blogPosts);
+        //    // Calling the repository to get back all the Blogs data from DB using blogPostrepository Injected file
+        //    var blogPosts = await blogPostRepository.GetAllAsync();
+
+        //    return View(blogPosts);
+        //}
+
+        //New code added here
+        //S2.Working on above same List Action Method to Display all Blogs with Pagination
+        [HttpGet]
+        [ActionName("List")]
+        public async Task<IActionResult> List(
+            int pageSize = 2, //this is for displaying no of elements/Tags result in each page here I changed from 3 to 1
+            int pageNumber = 1)
+        {
+            //To get the count of Tags Tag Repository has
+            //Based on the count on subset of pages we need to return the result
+            var totalRecords = await blogPostRepository.CountAsync();
+            var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+            //If the page doesn't exit if no tags found on other pages then stick on same last page
+            if (pageNumber > totalPages)
+            {
+                pageNumber--;
+            }
+            //If the page no is less then we can increase the page no to show all tags
+            if (pageNumber < 1)
+            {
+                pageNumber++;
+            }
+
+            //This ViewBag is reposnsible for saving the input text to stay on the text field while searching
+            ViewBag.TotalPages = totalPages;
+
+            //To temporary save the state of searh Query we use ViewBag here and inside cshtml page list
+            
+            ViewBag.PageSize = pageSize;
+            ViewBag.PageNumber = pageNumber;
+
+            // use dbContext to read the tags based on searchQuery sorting and pagination
+            var tags = await blogPostRepository.GetAllAsync(pageNumber, pageSize);
+
+            return View(tags);
         }
+
+        //New code ends here
 
         //Now to perform Edit operation first we need to get the single blogpost back based on Id and
         //then display one form with all the fileds to edit the Blogpost
