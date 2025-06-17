@@ -43,6 +43,7 @@ namespace Bloggie.Web.Repositories
         //    //This is to get all the Blogs from DB give back to controller to display on List view using bloggieDbContext
         //    return await bloggieDbContext.BlogPosts.Include(x => x.Tags).ToListAsync();
         //}
+
         //New code for GetAllAsync method implementation added here with Pagination
 
         public async Task<IEnumerable<BlogPost>> GetAllAsync(int pageNumber = 1,int pageSize = 100)
@@ -108,5 +109,7 @@ namespace Bloggie.Web.Repositories
 
             return null;
         }
+
+
     }
 }

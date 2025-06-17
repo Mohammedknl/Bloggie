@@ -24,3 +24,8 @@ body {
 .blog-details-content img {
     max-width: 100%;
 }
+
+/*This below css is for Tag click on Home Page for diff blogs*/
+.bg-primary {
+    background-color: #1c6845 !important;
+}

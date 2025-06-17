@@ -22,14 +22,40 @@ namespace Bloggie.Web.Controllers
             this.tagRepository = tagRepository;
         }
 
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    // getting all blogs via blogPostRepository
+        //    var blogPosts = await blogPostRepository.GetAllAsync();
+
+        //    // get all tags via tagRepository
+        //    var tags = await tagRepository.GetAllAsync();
+        //    //Model binding and displaying the result back to views
+        //    var model = new HomeViewModel
+        //    {
+        //        BlogPosts = blogPosts,
+        //        Tags = tags
+        //    };
+
+        //    return View(model);
+        //}
+
+        //Below is the updated method for showing Tags and Blogs based on user diff Tag clicks 
+        public async Task<IActionResult> Index(string? tag)
         {
-            // getting all blogs via blogPostRepository
+            // Get all blog posts
             var blogPosts = await blogPostRepository.GetAllAsync();
 
-            // get all tags via tagRepository
+            // If a tag is selected, filter blog posts by that tag
+            if (!string.IsNullOrWhiteSpace(tag))
+            {
+                blogPosts = blogPosts.Where(bp => bp.Tags.Any(t => t.Name == tag)).ToList();
+                ViewBag.SelectedTag = tag; // Optional: to highlight the selected tag in the view
+            }
+
+            // Get all tags
             var tags = await tagRepository.GetAllAsync();
-            //Model binding and displaying the result back to views
+
+            // Prepare the view model
             var model = new HomeViewModel
             {
                 BlogPosts = blogPosts,
@@ -38,6 +64,7 @@ namespace Bloggie.Web.Controllers
 
             return View(model);
         }
+
 
         public IActionResult Privacy()
         {

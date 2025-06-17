@@ -11,7 +11,7 @@
             <h1 class="display-5 fw-bold lh-1 mb-3">
                 Bloggie - Akbar Owaisi All Campus Blogs
             </h1>
-            <p class="lead">
+            <p class="lead" style="font-family: 'Georgia', serif; color: #002B5B; font-size: 1.1rem;">
                 Bloggie is the home to View blogpost of various Educational Institutes of Janab Akbaruddin Owaisi Chairman Salar-E-Millat Educational Trust.
             </p>
         </div>
@@ -30,15 +30,20 @@
     <div class="row justify-content-center">
          <div class="col-6 d-flex">
 
+             <!--This below If block Edited for Click operation of Tags for diff blogs-->
             @if (Model != null && Model.Tags.Any())
             {
                 foreach (var tag in Model.Tags)
                 {
-                    <span class="badge bg-dark me-1">
+                    <a class="badge me-1 text-decoration-none @(ViewBag.SelectedTag == tag.Name ? "bg-primary text-white" : "bg-dark text-white")"
+                       asp-controller="Home"
+                       asp-action="Index"
+                       asp-route-tag="@tag.Name">
                         @tag.Name
-                    </span>
+                    </a>
                 }
             }
+
             
         </div>
     </div>
