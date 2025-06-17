@@ -65,7 +65,14 @@ namespace Bloggie.Web.Controllers
             return View(model);
         }
 
+        //About Us page code added here
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
 
+
+        //Old code below
         public IActionResult Privacy()
         {
             return View();

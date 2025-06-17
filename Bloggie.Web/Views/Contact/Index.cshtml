@@ -1,0 +1,59 @@
+﻿@model Bloggie.Web.Models.ViewModels.ContactViewModel
+
+@{
+    ViewData["Title"] = "Contact Us";
+}
+
+<div class="container mt-5 mb-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 col-lg-6">
+            <h2 class="mb-4 text-center" style="font-family: 'Segoe UI', sans-serif; font-weight: bold;">Contact Us</h2>
+
+            <!-- Success Message -->
+            <div id="successMessage" class="alert alert-success d-none" role="alert">
+                Thank you! Your message has been submitted successfully will contact you soon.
+            </div>
+
+            <form id="contactForm">
+                <div class="mb-3">
+                    <label for="name" class="form-label">Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="name" placeholder="Enter your full name" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email <span class="text-danger">*</span></label>
+                    <input type="email" class="form-control" id="email" placeholder="Enter your email" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="subject" placeholder="Subject of your message" required />
+                </div>
+
+                <div class="mb-3">
+                    <label for="message" class="form-label">Message <span class="text-danger">*</span></label>
+                    <textarea class="form-control" id="message" rows="5" placeholder="Write your message here..." required></textarea>
+                </div>
+
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary px-4">Send Message</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        document.getElementById("contactForm").addEventListener("submit", function (e) {
+            e.preventDefault();
+
+            document.getElementById("successMessage").classList.remove("d-none");
+            this.reset();
+        });
+    </script>
+}
