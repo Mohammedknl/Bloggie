@@ -87,7 +87,7 @@ namespace Bloggie.Web.Controllers
             string? searchQuery,
             string? sortBy,
             string? sortDirection,
-            int pageSize = 1, //this is for displaying no of elements/Tags result in each page here I changed from 3 to 1
+            int pageSize = 3, //this is for displaying no of elements/Tags result in each page here I changed from 3 to 1
             int pageNumber = 1)
         {
             //To get the count of Tags Tag Repository has

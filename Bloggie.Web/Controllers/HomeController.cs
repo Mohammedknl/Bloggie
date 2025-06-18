@@ -52,6 +52,11 @@ namespace Bloggie.Web.Controllers
                 ViewBag.SelectedTag = tag; // Optional: to highlight the selected tag in the view
             }
 
+            // Sort BlogPost by latest date (most recent blogs first)
+            blogPosts = blogPosts
+                .OrderByDescending(bp => bp.PublishedDate)
+                .ToList();
+
             // Get all tags
             var tags = await tagRepository.GetAllAsync();
 
