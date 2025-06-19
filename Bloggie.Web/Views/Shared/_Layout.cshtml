@@ -35,15 +35,15 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light fw-bold fs-5" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-light fw-bold fs-6" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
                         <!--Below 2 list are added for AboutUs and COntact form-->
                         <li class="nav-item">
-                            <a class="nav-link text-white fw-bold fs-5" asp-controller="Home" asp-action="AboutUs">About</a>
+                            <a class="nav-link text-white fw-bold fs-6" asp-controller="Home" asp-action="AboutUs">About</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-white fw-bold fs-5" asp-controller="Contact" asp-action="Index">Contact</a>
+                            <a class="nav-link text-white fw-bold fs-6" asp-controller="Contact" asp-action="Index">Contact</a>
                         </li>
 
 
@@ -51,7 +51,7 @@
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
                         {
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light fw-bold fs-5" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-light fw-bold fs-6" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Admin
                                 </a>
                                 <ul class="dropdown-menu">
