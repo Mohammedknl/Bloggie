@@ -59,7 +59,11 @@ namespace Bloggie.Web.Controllers
                 }
 
                 // Get comments/populate comments for all blog post about information like Description DateAdded and Username
-                var blogCommentsDomainModel = await blogPostCommentRepository.GetCommentsByBlogIdAsync(blogPost.Id);
+                //var blogCommentsDomainModel = await blogPostCommentRepository.GetCommentsByBlogIdAsync(blogPost.Id);
+
+// Get comments/populate comments for all blog post about information like Description DateAdded and Username in descending order by date
+                var blogCommentsDomainModel = (await blogPostCommentRepository.GetCommentsByBlogIdAsync(blogPost.Id))
+                                              .OrderByDescending(c => c.DateAdded);
                 var blogCommentsForView = new List<BlogComment>();
 
                 foreach (var blogComment in blogCommentsDomainModel)
