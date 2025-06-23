@@ -39,7 +39,7 @@ namespace Bloggie.Web.Controllers
         //    return View(model);
         //}
 
-        //Below is the updated method for showing Tags and Blogs based on user diff Tag clicks 
+        //Below is the updated method for showing Tags and Blogs based on user selected diff Tag clicks 
         public async Task<IActionResult> Index(string? tag)
         {
             // Get all blog posts
