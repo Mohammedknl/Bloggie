@@ -1,5 +1,8 @@
+using System.Text.Json;
 using Bloggie.Web.Data; //BloggieDbContext class is from Data folder used in Servicces
 using Bloggie.Web.Repositories;
+using Bloggie.Web.Services;
+using Microsoft.AspNetCore.Http.Json;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -7,6 +10,47 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Adding services to the container.
 builder.Services.AddControllersWithViews();
+
+//***New code added here for API Request
+
+// Configure HTTP Client for OMRC API
+builder.Services.AddHttpClient<OMRCApiService>(client =>
+{
+    var baseUrl = builder.Configuration.GetValue<string>("ApiSettings:OMRCApiBaseUrl") ?? "https://localhost:7036/";
+    client.BaseAddress = new Uri(baseUrl);
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+    client.Timeout = TimeSpan.FromSeconds(30); // Set timeout
+})
+.ConfigurePrimaryHttpMessageHandler(() =>
+{
+    return new HttpClientHandler()
+    {
+        // For development - ignore SSL certificate errors
+        ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+    };
+});
+
+// Register the service
+builder.Services.AddScoped<IOMRCApiService, OMRCApiService>();
+
+// Configure JSON serialization options globally
+builder.Services.Configure<JsonOptions>(options =>
+{
+    options.SerializerOptions.PropertyNameCaseInsensitive = true;
+    options.SerializerOptions.PropertyNamingPolicy = JsonNamingPolicy.CamelCase;
+});
+
+// Configure logging
+builder.Services.AddLogging(config =>
+{
+    config.AddConsole();
+    config.AddDebug();
+});
+
+
+
+
+//New code ends here***
 
 //Adding another service like injecting BloggieDbContext class in to our App services using Dependencies injection using options like
 //we can use these services of BloggieDbContext whereever required like inside Controllers or Repositories

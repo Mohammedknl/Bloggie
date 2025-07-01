@@ -1,0 +1,41 @@
+﻿@model List<Region>
+@{
+    ViewData["Title"] = "Regions";
+}
+
+<div class="container mt-4">
+    <h1 class="mb-4">@ViewData["Title"]</h1>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row">
+            @foreach (var region in Model)
+            {
+                <div class="col-md-4 mb-4">
+                    <div class="card h-100">
+                        @if (!string.IsNullOrEmpty(region.RegionImageUrl))
+                        {
+                            <img src="@region.RegionImageUrl" class="card-img-top" alt="@region.Name" style="height: 200px; object-fit: cover;">
+                        }
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">@region.Name</h5>
+                            <p class="card-text">
+                                <strong>Code:</strong> @region.Code
+                            </p>
+                            <div class="mt-auto">
+                                <a asp-action="Details" asp-route-id="@region.Id" class="btn btn-primary">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info">
+            <h4>No regions found</h4>
+            <p>There are currently no regions available.</p>
+        </div>
+    }
+</div>

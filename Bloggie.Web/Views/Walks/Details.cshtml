@@ -1,0 +1,47 @@
+﻿@model Walk
+@{
+    ViewData["Title"] = "Walk Details";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Walks</a></li>
+            <li class="breadcrumb-item active">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-8">
+            @if (!string.IsNullOrEmpty(Model.WalkImageUrl))
+            {
+                <img src="@Model.WalkImageUrl" class="img-fluid rounded mb-4" alt="@Model.Name">
+            }
+            <h1>@Model.Name</h1>
+            <p class="lead">@Model.Description</p>
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Walk Information</h5>
+                </div>
+                <div class="card-body">
+                    <p><strong>Distance:</strong> @Model.LengthInKm km</p>
+                    @if (Model.Difficulty != null)
+                    {
+                        <p><strong>Difficulty:</strong> <span class="badge badge-secondary">@Model.Difficulty.Name</span></p>
+                    }
+                    @if (Model.Region != null)
+                    {
+                        <p><strong>Region:</strong> @Model.Region.Name</p>
+                    }
+                    <p><strong>Walk ID:</strong> @Model.Id</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to Walks</a>
+    </div>
+</div>

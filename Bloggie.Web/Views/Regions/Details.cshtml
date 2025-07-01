@@ -1,0 +1,31 @@
+﻿@model Region
+@{
+    ViewData["Title"] = "Region Details";
+}
+
+<div class="container mt-4">
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a asp-action="Index">Regions</a></li>
+            <li class="breadcrumb-item active">@Model.Name</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-6">
+            @if (!string.IsNullOrEmpty(Model.RegionImageUrl))
+            {
+                <img src="@Model.RegionImageUrl" class="img-fluid rounded" alt="@Model.Name">
+            }
+        </div>
+        <div class="col-md-6">
+            <h1>@Model.Name</h1>
+            <p><strong>Region Code:</strong> @Model.Code</p>
+            <p><strong>Region ID:</strong> @Model.Id</p>
+        </div>
+    </div>
+
+    <div class="mt-4">
+        <a asp-action="Index" class="btn btn-secondary">Back to Regions</a>
+    </div>
+</div>

@@ -35,10 +35,10 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-light fw-bold fs-6" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            <a class="nav-link text-white fw-bold fs-6" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
 
-                        <!--Below 2 list are added for AboutUs and COntact form-->
+                        <!--Below 2 list are added for AboutUs and Contact form-->
                         <li class="nav-item">
                             <a class="nav-link text-white fw-bold fs-6" asp-controller="Home" asp-action="AboutUs">About</a>
                         </li>
@@ -46,6 +46,14 @@
                             <a class="nav-link text-white fw-bold fs-6" asp-controller="Contact" asp-action="Index">Contact</a>
                         </li>
 
+                     <!--
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-bold fs-6" asp-controller="Regions" asp-action="Index">Regions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white fw-bold fs-6" asp-controller="Walks" asp-action="Index">Walks</a>
+                        </li>
+                        -->
 
                         <!--Below C# line is for Authorization of Super Admin and Auser roles-->
                         @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
